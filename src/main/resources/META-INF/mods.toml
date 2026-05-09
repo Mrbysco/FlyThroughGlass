@@ -1,0 +1,26 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+issueTrackerURL="https://github.com/Mrbysco/FlyThroughGlass/issues"
+license="MIT"
+
+[[mods]]
+modId="flythroughglass"
+version="${file.jarVersion}"
+displayName="Fly Through Glass"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/fly-through-glass"
+authors="Mrbysco"
+description='''
+Allows you to fly through glass with an elytra
+'''
+[[dependencies.flythroughglass]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.20,1.21)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.flythroughglass]]
+modId="forge"
+mandatory=true
+versionRange="[47,)"
+ordering="NONE"
+side="BOTH"
