@@ -9,24 +9,21 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
-@EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
+@EventBusSubscriber
 public class FlyDatagen {
 	@SubscribeEvent
-	public static void gatherData(GatherDataEvent event) {
+	public static void gatherData(GatherDataEvent.Client event) {
 		DataGenerator generator = event.getGenerator();
 		PackOutput packOutput = generator.getPackOutput();
 		CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
-		ExistingFileHelper helper = event.getExistingFileHelper();
 
-		generator.addProvider(event.includeClient(), new FlyLanguageProvider(packOutput));
-		generator.addProvider(event.includeServer(), new FlyBlockTagProvider(packOutput, lookupProvider, helper));
+		generator.addProvider(true, new FlyLanguageProvider(packOutput));
+		generator.addProvider(true, new FlyBlockTagProvider(packOutput, lookupProvider));
 	}
 
 	public static class FlyLanguageProvider extends LanguageProvider {
@@ -58,8 +55,8 @@ public class FlyDatagen {
 
 	public static class FlyBlockTagProvider extends BlockTagsProvider {
 
-		public FlyBlockTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) {
-			super(output, lookupProvider, FlyThroughGlassMod.MOD_ID, existingFileHelper);
+		public FlyBlockTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+			super(output, lookupProvider, FlyThroughGlassMod.MOD_ID);
 		}
 
 		@Override

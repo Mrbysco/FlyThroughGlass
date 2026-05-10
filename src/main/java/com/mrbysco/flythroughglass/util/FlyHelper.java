@@ -3,7 +3,7 @@ package com.mrbysco.flythroughglass.util;
 import com.mrbysco.flythroughglass.FlyThroughGlassMod;
 import com.mrbysco.flythroughglass.config.config.FlyConfig;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
@@ -16,7 +16,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public class FlyHelper {
-	public static final TagKey<Block> BLOCKS_TO_BREAK = BlockTags.create(ResourceLocation.fromNamespaceAndPath(FlyThroughGlassMod.MOD_ID, "blocks_to_break"));
+	public static final TagKey<Block> BLOCKS_TO_BREAK = BlockTags.create(Identifier.fromNamespaceAndPath(FlyThroughGlassMod.MOD_ID, "blocks_to_break"));
 
 	/**
 	 * Checks for glass blocks in the path of the entity's movement and breaks them if found.
@@ -55,7 +55,7 @@ public class FlyHelper {
 	 */
 	public static boolean shouldBreakGlass(LivingEntity entity) {
 		if (!FlyConfig.COMMON.runThroughBlocks.get() || !(entity instanceof Player)) return false;
-		if (!entity.level().isClientSide && !entity.isShiftKeyDown()) {
+		if (!entity.level().isClientSide() && !entity.isShiftKeyDown()) {
 			double moveSpeed = entity.getAttributeValue(Attributes.MOVEMENT_SPEED);
 			boolean fastEnough = moveSpeed >= FlyConfig.COMMON.runMinSpeed.get();
 

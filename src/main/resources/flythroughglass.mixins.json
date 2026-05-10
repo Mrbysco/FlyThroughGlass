@@ -1,11 +1,13 @@
 {
   "required": true,
   "minVersion": "0.8.5",
-  "compatibilityLevel": "JAVA_21",
+  "compatibilityLevel": "JAVA_25",
   "package": "com.mrbysco.flythroughglass.mixin",
-  "refmap": "flythroughglass.refmap.json",
   "target": "@env(DEFAULT)",
   "mixins": [
     "LivingEntityMixin"
-  ]
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }

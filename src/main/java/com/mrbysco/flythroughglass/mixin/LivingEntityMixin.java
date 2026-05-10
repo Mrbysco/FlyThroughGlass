@@ -24,22 +24,22 @@ public abstract class LivingEntityMixin extends Entity {
 	@Unique
 	private boolean flythroughglass$brokeGlass = false;
 
-	@Inject(method = "travel", at = @At(value = "INVOKE",
-			target = "Lnet/minecraft/world/entity/LivingEntity;move(Lnet/minecraft/world/entity/MoverType;Lnet/minecraft/world/phys/Vec3;)V",
-			shift = At.Shift.BEFORE, ordinal = 2))
-	private void flythroughglass$preMoveElytra(Vec3 travelVector, CallbackInfo ci) {
+	@Inject(method = "travelFallFlying(Lnet/minecraft/world/phys/Vec3;)V", at = @At(value = "INVOKE",
+			target = "Lnet/minecraft/world/entity/LivingEntity;setDeltaMovement(Lnet/minecraft/world/phys/Vec3;)V",
+			shift = At.Shift.BEFORE, ordinal = 0))
+	private void flythroughglass$preMoveElytra(Vec3 input, CallbackInfo ci) {
 		flythroughglass$brokeGlass = false;
-		if (!level().isClientSide) {
+		if (!level().isClientSide()) {
 			flythroughglass$preVelocity = getDeltaMovement();
 			flythroughglass$brokeGlass = FlyHelper.breakGlassAhead((LivingEntity) (Object) this, flythroughglass$preVelocity);
 		}
 	}
 
-	@Inject(method = "travel", at = @At(value = "INVOKE",
-			target = "Lnet/minecraft/world/entity/LivingEntity;move(Lnet/minecraft/world/entity/MoverType;Lnet/minecraft/world/phys/Vec3;)V",
-			shift = At.Shift.AFTER, ordinal = 2), cancellable = true)
-	private void flythroughglass$postMoveElytra(Vec3 travelVector, CallbackInfo ci) {
-		if (flythroughglass$brokeGlass && !level().isClientSide) {
+	@Inject(method = "travelFallFlying(Lnet/minecraft/world/phys/Vec3;)V", at = @At(value = "INVOKE",
+			target = "Lnet/minecraft/world/entity/LivingEntity;setDeltaMovement(Lnet/minecraft/world/phys/Vec3;)V",
+			shift = At.Shift.BEFORE, ordinal = 0), cancellable = true)
+	private void flythroughglass$postMoveElytra(Vec3 input, CallbackInfo ci) {
+		if (flythroughglass$brokeGlass && !level().isClientSide()) {
 			setDeltaMovement(flythroughglass$preVelocity.x, getDeltaMovement().y, flythroughglass$preVelocity.z);
 			horizontalCollision = false;
 			ci.cancel();
