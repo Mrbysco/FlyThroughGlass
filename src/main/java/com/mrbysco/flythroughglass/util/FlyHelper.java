@@ -1,13 +1,22 @@
-package com.mrbysco.flythroughglass;
+package com.mrbysco.flythroughglass.util;
 
+import com.mrbysco.flythroughglass.FlyThroughGlassMod;
+import com.mrbysco.flythroughglass.config.config.FlyConfig;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.Tags;
 
 public class FlyHelper {
+	public static final TagKey<Block> BLOCKS_TO_BREAK = BlockTags.create(new ResourceLocation(FlyThroughGlassMod.MOD_ID, "blocks_to_break"));
 
 	/**
 	 * Checks for glass blocks in the path of the entity's movement and breaks them if found.
@@ -28,7 +37,7 @@ public class FlyHelper {
 				for (int z = (int) Math.floor(minZ); z <= (int) Math.floor(maxZ); z++) {
 					BlockPos pos = new BlockPos(x, y, z);
 					BlockState state = entity.level().getBlockState(pos);
-					if (state.is(Tags.Blocks.GLASS) || state.is(Tags.Blocks.GLASS_PANES)) {
+					if (state.is(BLOCKS_TO_BREAK)) {
 						entity.level().destroyBlock(pos, false, entity);
 						broke = true;
 					}
@@ -36,5 +45,26 @@ public class FlyHelper {
 			}
 		}
 		return broke;
+	}
+
+	/**
+	 * Checks if running should break glass
+	 *
+	 * @param entity The entity that is running
+	 * @return If the entity should break glass upon running into glass
+	 */
+	public static boolean shouldBreakGlass(LivingEntity entity) {
+		if (!FlyConfig.COMMON.runThroughBlocks.get() || !(entity instanceof Player)) return false;
+		if (!entity.level().isClientSide && !entity.isShiftKeyDown()) {
+			double moveSpeed = entity.getAttributeValue(Attributes.MOVEMENT_SPEED);
+			boolean fastEnough = moveSpeed >= FlyConfig.COMMON.runMinSpeed.get();
+
+			if (fastEnough) {
+				Vec3 lookAhead = entity.getLookAngle().scale(1.0);
+				FlyHelper.breakGlassAhead(entity, lookAhead);
+				return true;
+			}
+		}
+		return false;
 	}
 }

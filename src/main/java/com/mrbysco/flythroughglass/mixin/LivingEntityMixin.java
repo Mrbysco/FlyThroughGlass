@@ -1,6 +1,6 @@
 package com.mrbysco.flythroughglass.mixin;
 
-import com.mrbysco.flythroughglass.FlyHelper;
+import com.mrbysco.flythroughglass.util.FlyHelper;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -43,6 +43,14 @@ public abstract class LivingEntityMixin extends Entity {
 			setDeltaMovement(flythroughglass$preVelocity.x, getDeltaMovement().y, flythroughglass$preVelocity.z);
 			horizontalCollision = false;
 			ci.cancel();
+		}
+	}
+
+	@Inject(method = "travel", at = @At("TAIL"))
+	private void flythroughglass$afterTravel(Vec3 travelVector, CallbackInfo ci) {
+		LivingEntity livingEntity = (LivingEntity) (Object) this;
+		if (FlyHelper.shouldBreakGlass(livingEntity)) {
+			FlyHelper.breakGlassAhead(livingEntity, getLookAngle());
 		}
 	}
 }
