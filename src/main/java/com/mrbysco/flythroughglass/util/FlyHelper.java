@@ -16,7 +16,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public class FlyHelper {
-	public static final TagKey<Block> BLOCKS_TO_BREAK = BlockTags.create(new ResourceLocation(FlyThroughGlassMod.MOD_ID, "blocks_to_break"));
+	public static final TagKey<Block> BLOCKS_TO_BREAK = BlockTags.create(ResourceLocation.fromNamespaceAndPath(FlyThroughGlassMod.MOD_ID, "blocks_to_break"));
 
 	/**
 	 * Checks for glass blocks in the path of the entity's movement and breaks them if found.

@@ -1,0 +1,8 @@
+{
+  "flythroughglass.configuration.general": "General",
+  "flythroughglass.configuration.general.tooltip": "General Settings",
+  "flythroughglass.configuration.runMinSpeed": "Run Min Speed",
+  "flythroughglass.configuration.runMinSpeed.tooltip": "The minimum speed a player must have to run through blocks [Default: 0.18]",
+  "flythroughglass.configuration.runThroughBlocks": "Run Through Blocks",
+  "flythroughglass.configuration.runThroughBlocks.tooltip": "When enabled allows running through blocks [Default: false]"
+}

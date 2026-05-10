@@ -1,14 +1,14 @@
 package com.mrbysco.flythroughglass.config.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class FlyConfig {
 	public static class Common {
-		public final ForgeConfigSpec.BooleanValue runThroughBlocks;
-		public final ForgeConfigSpec.DoubleValue runMinSpeed;
+		public final ModConfigSpec.BooleanValue runThroughBlocks;
+		public final ModConfigSpec.DoubleValue runMinSpeed;
 
-		Common(ForgeConfigSpec.Builder builder) {
+		Common(ModConfigSpec.Builder builder) {
 			//General settings
 			builder.comment("General settings")
 					.push("general");
@@ -26,11 +26,11 @@ public class FlyConfig {
 	}
 
 
-	public static final ForgeConfigSpec commonSpec;
+	public static final ModConfigSpec commonSpec;
 	public static final Common COMMON;
 
 	static {
-		final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
+		final Pair<Common, ModConfigSpec> specPair = new ModConfigSpec.Builder().configure(Common::new);
 		commonSpec = specPair.getRight();
 		COMMON = specPair.getLeft();
 	}
