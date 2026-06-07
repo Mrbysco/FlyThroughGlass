@@ -1,1 +1,1 @@
-* Update to 26.1.2
+* Fix spectators being able to break glass
