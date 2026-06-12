@@ -86,6 +86,12 @@ repositories {
     maven {
         url = "https://maven.blamejared.com"
     }
+    maven {
+        url "https://cursemaven.com"
+        content {
+            includeGroup "curse.maven"
+        }
+    }
 }
 
 dependencies {
@@ -96,6 +102,9 @@ dependencies {
     modCompileOnly("mezz.jei:jei-${mc_version}-forge-api:${jei_version}")
 
     modRuntimeOnly("mezz.jei:jei-${mc_version}-forge:${jei_version}")
+
+    modCompileOnly("curse.maven:shield-expansion-583318:${shield_expansion_version}")
+    modRuntimeOnly("curse.maven:shield-expansion-583318:${shield_expansion_version}")
 }
 
 // Example for how to get properties into the manifest for reading at runtime.
