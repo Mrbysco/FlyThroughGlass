@@ -55,7 +55,7 @@ public class FlyHelper {
 	 */
 	public static boolean shouldBreakGlass(LivingEntity entity) {
 		if (!FlyConfig.COMMON.runThroughBlocks.get() || !(entity instanceof Player) || entity.isSpectator()) return false;
-		if (!entity.level().isClientSide && !entity.isShiftKeyDown()) {
+		if (!entity.level().isClientSide && !entity.isShiftKeyDown() && !entity.isBlocking()) {
 			double moveSpeed = entity.getAttributeValue(Attributes.MOVEMENT_SPEED);
 			boolean fastEnough = moveSpeed >= FlyConfig.COMMON.runMinSpeed.get();
 
