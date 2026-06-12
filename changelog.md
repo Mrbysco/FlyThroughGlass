@@ -1,1 +1,1 @@
-* Fix spectators being able to break glass
+* Fix shield blocking allowing you to break glass
